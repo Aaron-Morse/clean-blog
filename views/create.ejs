@@ -39,16 +39,14 @@
               <!-- To make this form functional, sign up at-->
               <!-- https://startbootstrap.com/solution/contact-forms-->
               <!-- to get an API token!-->
-              <form
-                id="contactForm"
-                data-sb-form-api-token="API_TOKEN"
-              >
+              <form action="/posts/store" method="POST">
                 <div class="form-floating">
                   <input
                     class="form-control"
                     id="title"
                     type="text"
-                    placeholder="Enter your title..."
+                    placeholder="Title"
+                    name="title"
                   />
                   <label for="title">Title</label>
                 </div>
@@ -56,7 +54,8 @@
                   <textarea
                     class="form-control"
                     id="body"
-                    placeholder="Enter your body here..."
+                    placeholder="Body"
+                    name="body"
                     style="height: 12rem"
                   ></textarea>
                   <label for="body">Body</label>
@@ -90,7 +89,7 @@
                 </div>
                 <!-- Submit Button-->
                 <button
-                  class="btn btn-primary text-uppercase disabled"
+                  class="btn btn-primary text-uppercase"
                   id="submitButton"
                   type="submit"
                 >

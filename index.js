@@ -5,6 +5,9 @@ const app = express();
 const ejs = require("ejs");
 const mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost/my_database");
+const bodyParser = require("body-parser");
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 
 app.use(express.static("public"));
@@ -32,4 +35,9 @@ app.get("/post", (req, res) => {
 
 app.get("/posts/new", (req, res) => {
   res.render("create");
+});
+
+app.post("/posts/store", (req, res) => {
+  console.log(req.body);
+  res.redirect("/");
 });
