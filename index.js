@@ -4,13 +4,16 @@ const path = require("path");
 const app = express();
 const ejs = require("ejs");
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/my_database");
 const bodyParser = require("body-parser");
+const BlogPost = require("./models/BlogPost");
+
+mongoose.connect("mongodb://localhost/my_database");
+
+// Middleware
+app.set("view engine", "ejs");
+app.use(express.static("public"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.set("view engine", "ejs");
-
-app.use(express.static("public"));
 
 app.listen(4000, () => {
   console.log("App listening on port 4000");
@@ -37,7 +40,15 @@ app.get("/posts/new", (req, res) => {
   res.render("create");
 });
 
-app.post("/posts/store", (req, res) => {
+//Post routes
+app.post("/posts/store", async (req, res) => {
   console.log(req.body);
-  res.redirect("/");
+  try {
+    const blogpost = await BlogPost.create(req.body);
+    if (blogpost) {
+      res.redirect("/");
+    }
+  } catch (error) {
+    console.log(error);
+  }
 });
