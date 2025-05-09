@@ -32,14 +32,11 @@
               possible!
             </p>
             <div class="my-5">
-              <!-- * * * * * * * * * * * * * * *-->
-              <!-- * * SB Forms Contact Form * *-->
-              <!-- * * * * * * * * * * * * * * *-->
-              <!-- This form is pre-integrated with SB Forms.-->
-              <!-- To make this form functional, sign up at-->
-              <!-- https://startbootstrap.com/solution/contact-forms-->
-              <!-- to get an API token!-->
-              <form action="/posts/store" method="POST">
+              <form
+                action="/posts/store"
+                method="POST"
+                enctype="multipart/form-data"
+              >
                 <div class="form-floating">
                   <input
                     class="form-control"
@@ -61,32 +58,20 @@
                   <label for="body">Body</label>
                 </div>
                 <br />
-                <!-- Submit success message-->
-                <!---->
-                <!-- This is what your users will see when the form-->
-                <!-- has successfully submitted-->
-                <div class="d-none" id="submitSuccessMessage">
-                  <div class="text-center mb-3">
-                    <div class="fw-bolder">
-                      Form submission successful!
-                    </div>
-                    To activate this form, sign up at
-                    <br />
-                    <a
-                      href="https://startbootstrap.com/solution/contact-forms"
-                      >https://startbootstrap.com/solution/contact-forms</a
-                    >
+                <div class="control-group">
+                  <div
+                    class="form-group floating-label-form-group controls"
+                  >
+                    <label for="image">Image</label>
+                    <input
+                      type="file"
+                      class="form-control"
+                      name="image"
+                      id="image"
+                    />
                   </div>
                 </div>
-                <!-- Submit error message-->
-                <!---->
-                <!-- This is what your users will see when there is-->
-                <!-- an error submitting the form-->
-                <div class="d-none" id="submitErrorMessage">
-                  <div class="text-center text-danger mb-3">
-                    Error sending message!
-                  </div>
-                </div>
+                <br />
                 <!-- Submit Button-->
                 <button
                   class="btn btn-primary text-uppercase"
