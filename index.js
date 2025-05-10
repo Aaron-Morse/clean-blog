@@ -1,74 +1,37 @@
 const express = require("express");
-const path = require("path");
 
 const app = express();
 const ejs = require("ejs");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const BlogPost = require("./models/BlogPost");
 const fileUpload = require("express-fileupload");
 
 app.set("view engine", "ejs");
 mongoose.connect("mongodb://localhost/my_database");
 
 // Middleware
-const validateMiddleWare = (req, res, next) => {
-  if (
-    req.files === null ||
-    req.body.title === null ||
-    req.body.body === null
-  ) {
-    return res.redirect("/posts/new");
-  }
-  next();
-};
+const validateMiddleWare = require("./middleware/validationMiddleware");
 app.use(express.static("public"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
 
-app.listen(4000, () => {
-  console.log("App listening on port 4000");
-});
+// Controllers
+const newPostController = require("./controllers/newPost");
+const homeController = require("./controllers/home");
+const storePostController = require("./controllers/storePost");
+const getPostController = require("./controllers/getPost");
 
 // Get routes
-app.get("/", async (req, res) => {
-  const blogposts = await BlogPost.find({});
-  res.render("index", {
-    blogposts: blogposts,
-  });
-});
+app.get("/", homeController);
 
-app.get("/about", (req, res) => {
-  res.render("about");
-});
+app.get("/post/:id", getPostController);
 
-app.get("/contact", (req, res) => {
-  res.render("contact");
-});
-
-app.get("/post/:id", async (req, res) => {
-  console.log(req.params);
-  const blogpost = await BlogPost.findById(req.params.id);
-  res.render("post", {
-    blogpost,
-  });
-});
-
-app.get("/posts/new", (req, res) => {
-  res.render("create");
-});
+app.get("/posts/new", newPostController);
 
 //Post routes
-app.post("/posts/store", validateMiddleWare, (req, res) => {
-  let image = req.files.image;
-  const imagePath = path.resolve(__dirname, "public/img", image.name);
+app.post("/posts/store", validateMiddleWare, storePostController);
 
-  image.mv(imagePath, async (error) => {
-    await BlogPost.create({
-      ...req.body,
-      image: `/img/${image.name}`,
-    });
-    res.redirect("/");
-  });
+app.listen(4000, () => {
+  console.log("App listening on port 4000");
 });
