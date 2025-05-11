@@ -28,6 +28,8 @@ const storePostController = require("./controllers/storePost");
 const getPostController = require("./controllers/getPost");
 const newUserController = require("./controllers/newUser");
 const storeUserController = require("./controllers/storeUser");
+const loginController = require("./controllers/login");
+const loginUserController = require("./controllers/loginUser");
 
 // Routes
 // GET Routes
@@ -35,10 +37,12 @@ app.get("/", homeController);
 app.get("/post/:id", getPostController);
 app.get("/posts/new", newPostController);
 app.get("/auth/register", newUserController);
+app.get("/auth/login", loginController);
 
 // POST Routes
 app.post("/posts/store", validateMiddleWare, storePostController);
 app.post("/users/register", storeUserController);
+app.post("/users/login", loginUserController);
 
 // Start Server
 const PORT = 4000;
