@@ -26,15 +26,19 @@ const newPostController = require("./controllers/newPost");
 const homeController = require("./controllers/home");
 const storePostController = require("./controllers/storePost");
 const getPostController = require("./controllers/getPost");
+const newUserController = require("./controllers/newUser");
+const storeUserController = require("./controllers/storeUser");
 
 // Routes
 // GET Routes
 app.get("/", homeController);
 app.get("/post/:id", getPostController);
 app.get("/posts/new", newPostController);
+app.get("/auth/register", newUserController);
 
 // POST Routes
 app.post("/posts/store", validateMiddleWare, storePostController);
+app.post("/users/register", storeUserController);
 
 // Start Server
 const PORT = 4000;
