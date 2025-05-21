@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
 const expressSession = require("express-session");
+const flash = require("connect-flash");
 
 // Initialize App
 const app = express();
@@ -30,6 +31,7 @@ app.use((req, res, next) => {
   loggedIn = req.session.userID;
   next();
 });
+app.use(flash());
 
 // Middleware
 const validateMiddleWare = require("./middleware/validationMiddleware");
